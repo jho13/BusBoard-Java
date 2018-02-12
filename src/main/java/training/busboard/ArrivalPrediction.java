@@ -1,12 +1,14 @@
 package training.busboard;
 
 public class ArrivalPrediction {
+    public String lineName;
+    public String destinationName;
+    public int timeToStation;
 
-    public String destination;
-    public int minutesToArrival;
+    public ArrivalPrediction() {}
 
     @Override
     public String toString() {
-        return "";
+        return String.format("%5s%15s%2d", lineName, destinationName, timeToStation);
     }
 }
