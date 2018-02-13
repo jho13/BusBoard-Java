@@ -9,14 +9,16 @@ import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 public class TFLClient {
+    private static final String API_URL = "https://api.tfl.gov.uk";
+    private static final String ARRIVALS_PATH = "StopPoint/{stopId}/Arrivals";
+
     private Client client = ClientBuilder.newBuilder().register(JacksonFeature.class).build();
 
-    public List<ArrivalPrediction> getPredictions(String stopID) {
-        return client.target("foo")
-                .path("foo")
-                .resolveTemplate("stopId", "foo")
+    public List<ArrivalPrediction> getPredictions(String stopId) {
+        return client.target(API_URL)
+                .path(ARRIVALS_PATH)
+                .resolveTemplate("stopId", stopId)
                 .request(MediaType.APPLICATION_JSON_TYPE)
-                .get(new GenericType<List<ArrivalPrediction>>() {
-                });
+                .get(new GenericType<List<ArrivalPrediction>>() {});
     }
 }

@@ -1,7 +1,10 @@
 package training.busboard;
 
-public class ArrivalPrediction {
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
+
+public class ArrivalPrediction {
 
     private String lineName;
     private String destinationName;
@@ -35,6 +38,6 @@ public class ArrivalPrediction {
 
     @Override
     public String toString() {
-        return String.format("%-5s%-25s%-2d", lineName, destinationName, timeToStation);
+        return String.format("%-15s%-25s%-25d", lineName, destinationName, Math.round(timeToStation / 60.0));
     }
 }

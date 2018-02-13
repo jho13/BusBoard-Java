@@ -7,23 +7,26 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String args[]) {
-        String stopID = promptForStopID();
-        List<ArrivalPrediction> predictions = new TFLClient().getPredictions(stopID);
+        String stopId = promptForStopId();
+        List<ArrivalPrediction> predictions = new TFLClient().getPredictions(stopId);
         Collections.sort(predictions, new Comparator<ArrivalPrediction>() {
             @Override
             public int compare(ArrivalPrediction ap1, ArrivalPrediction ap2) {
                 return ap1.getTimeToStation() - ap2.getTimeToStation();
             }
         });
-        for (ArrivalPrediction prediction : predictions) {
-            System.out.println(prediction);
+
+        System.out.println(String.format("%-15s%-25s%-25s",
+                "Line Name", "Destination", "Time to Arrival (Minutes)"));
+        for (int i = 0; i < predictions.size() && i < 5; ++i) {
+            System.out.println(predictions.get(i));
         }
     }
 
-    private static String promptForStopID() {
+    private static String promptForStopId() {
         Scanner in = new Scanner(System.in);
-        String stopID = in.nextLine();
+        String stopId = in.nextLine();
         in.close();
-        return stopID;
+        return stopId;
     }
 }	
