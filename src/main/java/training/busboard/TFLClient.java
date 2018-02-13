@@ -11,15 +11,12 @@ import java.util.List;
 public class TFLClient {
     private Client client = ClientBuilder.newBuilder().register(JacksonFeature.class).build();
 
-    public void getPredictions() {
-
-
-        client.target("foo")
+    public List<ArrivalPrediction> getPredictions(String stopID) {
+        return client.target("foo")
                 .path("foo")
                 .resolveTemplate("stopId", "foo")
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .get(new GenericType<List<ArrivalPrediction>>() {
                 });
-
     }
 }
