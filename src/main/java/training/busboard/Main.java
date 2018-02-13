@@ -7,7 +7,12 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String args[]) {
-        String stopId = promptForStopId();
+        String postcode = promptForPostcode();
+        Coordinate coordinate = new PostcodeClient().getCoordinate(postcode);
+        System.out.println(coordinate.getLatitude() + " " + coordinate.getLongitude());
+
+        /*
+        List<>
         List<ArrivalPrediction> predictions = new TFLClient().getPredictions(stopId);
         Collections.sort(predictions, new Comparator<ArrivalPrediction>() {
             @Override
@@ -21,12 +26,13 @@ public class Main {
         for (int i = 0; i < predictions.size() && i < 5; ++i) {
             System.out.println(predictions.get(i));
         }
+        */
     }
 
-    private static String promptForStopId() {
+    private static String promptForPostcode() {
         Scanner in = new Scanner(System.in);
-        String stopId = in.nextLine();
+        String postcode = in.nextLine();
         in.close();
-        return stopId;
+        return postcode;
     }
 }	
