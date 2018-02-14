@@ -16,7 +16,6 @@ public class PostcodeClient extends ApiClient {
                 .get();
 
         if (response.getStatus() != Response.Status.OK.getStatusCode()) {
-            System.out.println("Invalid postcode!");
             return null;
         }
 

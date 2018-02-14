@@ -12,11 +12,13 @@ public class Main {
     public static void main(String args[]) {
 
         String postcode = promptForPostcode();
-        Coordinates coordinates = new PostcodeClient().getCoordinate(postcode);
+        Coordinates coordinates = postcodeClient.getCoordinate(postcode);
+        if (coordinates == null) {
+            System.out.println("Invalid postcode!");
+            return;
+        }
 
-        TFLClient tflClient = new TFLClient();
         List<StopPoint> nearbyStopPoints = tflClient.getNearbyStopPoints(coordinates);
-
         if (nearbyStopPoints.isEmpty()) {
             System.out.println("No bus stops found within 200m!");
             return;

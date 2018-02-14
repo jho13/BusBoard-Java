@@ -3,14 +3,34 @@
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
       layout:decorate="layout">
 <head>
+    <meta http-equiv="refresh" content="30" />
     <title>Bus Information</title>
 </head>
 <body>
 <div layout:fragment="content" class="container body-content">
     <h2>Bus Information</h2>
+
     <div>
         <p>You entered postcode <span th:text="${busInfo.postcode}"></span></p>
+    </div>
+
+    <div th:if="${busInfo.stopsWithArrivals != null}">
+        <div th:if="${!busInfo.stopsWithArrivals.isEmpty()}">
+            <div th:each="stop : ${busInfo.stopsWithArrivals}">
+                <h3 th:text="${stop.name}"></h3>
+                <div th:each="arrival : ${stop.arrivals}">
+                    <p>In <span th:text="${arrival.timeToStation / 60}"></span> minutes: <span th:text="${arrival.lineName}"></span> to <span th:text="${arrival.destinationName}"></span></p>
+                </div>
+            </div>
+        </div>
+        <div th:unless="${!busInfo.stopsWithArrivals.isEmpty()}">
+            <div>No bus stops found within 200m</div>
+        </div>
+    </div>
+    <div th:unless="${busInfo.stopsWithArrivals != null}">
+        <div>Postcode is not valid.</div>
     </div>
 </div>
 </body>
 </html>
+
