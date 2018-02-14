@@ -1,24 +1,45 @@
 package training.busboard;
 
-import org.glassfish.jersey.jackson.JacksonFeature;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-public class TFLClient {
-    private static final String API_URL = "https://api.tfl.gov.uk";
+public class TFLClient extends ApiClient {
     private static final String ARRIVALS_PATH = "StopPoint/{stopId}/Arrivals";
+    private static final String STOP_POINT_PATH = "StopPoint";
 
-    private Client client = ClientBuilder.newBuilder().register(JacksonFeature.class).build();
+    public List<StopPoint> getNearbyStopPoints(Coordinates coordinates) {
+        return getClient()
+                .path(STOP_POINT_PATH)
+                .queryParam("stopTypes", "NaptanPublicBusCoachTram")
+                .queryParam("lat", coordinates.getLatitude())
+                .queryParam("lon", coordinates.getLongitude())
+                .request(MediaType.APPLICATION_JSON_TYPE)
+                .get(StopPointResult.class)
+                .getStopPoints();
+    }
 
     public List<ArrivalPrediction> getPredictions(String stopId) {
-        return client.target(API_URL)
+        return getClient()
                 .path(ARRIVALS_PATH)
                 .resolveTemplate("stopId", stopId)
                 .request(MediaType.APPLICATION_JSON_TYPE)
                 .get(new GenericType<List<ArrivalPrediction>>() {});
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    private static class StopPointResult {
+        private List<StopPoint> stopPoints;
+
+        public List<StopPoint> getStopPoints() {
+            return stopPoints;
+        }
+    }
+
+    @Override
+    protected String getApiUrl() {
+        return "https://api.tfl.gov.uk";
     }
 }

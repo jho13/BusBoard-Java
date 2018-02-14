@@ -1,24 +1,40 @@
 package training.busboard;
 
-import org.glassfish.jersey.jackson.JacksonFeature;
-
-import javax.ws.rs.client.Client;
-import javax.ws.rs.client.ClientBuilder;
-import javax.ws.rs.core.GenericType;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.ws.rs.core.MediaType;
-import java.util.List;
+import javax.ws.rs.core.Response;
 
-public class PostcodeClient {
-    private static final String API_URL = "https://api.postcodes.io";
-    private static final String COORDINATE_PATH = "postcodes/{postcode}";
+public class PostcodeClient extends ApiClient {
 
-    private Client client = ClientBuilder.newBuilder().register(JacksonFeature.class).build();
+    private static final String POSTCODE_PATH = "postcodes/{postcode}";
 
-    public Coordinate getCoordinate(String postcode) {
-        return client.target(API_URL)
-                .path(COORDINATE_PATH)
+    public Coordinates getCoordinate(String postcode) {
+        Response response = getClient()
+                .path(POSTCODE_PATH)
                 .resolveTemplate("postcode", postcode)
                 .request(MediaType.APPLICATION_JSON_TYPE)
-                .get(new GenericType<Coordinate>() {});
+                .get();
+
+        if (response.getStatus() != Response.Status.OK.getStatusCode()) {
+            System.out.println("Invalid postcode!");
+            return null;
+        }
+
+        return response.readEntity(PostcodeResult.class)
+                .getResult();
+    }
+
+    @JsonIgnoreProperties(ignoreUnknown = true)
+    private static class PostcodeResult {
+        private Coordinates result;
+
+        public Coordinates getResult() {
+            return result;
+        }
+    }
+
+    @Override
+    protected String getApiUrl() {
+        return "https://api.postcodes.io";
     }
 }

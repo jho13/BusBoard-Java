@@ -3,8 +3,7 @@ package training.busboard;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
-
-public class Coordinate {
+public class Coordinates {
     private double longitude;
     private double latitude;
 
@@ -24,5 +23,10 @@ public class Coordinate {
         this.latitude = latitude;
     }
 
-    private Coordinate() {}
+    public Coordinates() {}
+
+    @Override
+    public String toString() {
+        return longitude + "  " + latitude;
+    }
 }
