@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import training.busboard.*;
+import training.busboard.models.ArrivalPrediction;
+import training.busboard.models.Coordinates;
+import training.busboard.models.StopPoint;
 
 import java.util.ArrayList;
 import java.util.Collections;

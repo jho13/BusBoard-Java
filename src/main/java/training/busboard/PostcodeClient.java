@@ -1,6 +1,8 @@
 package training.busboard;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import training.busboard.models.Coordinates;
+
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 

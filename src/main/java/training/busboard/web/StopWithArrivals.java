@@ -1,6 +1,6 @@
 package training.busboard.web;
 
-import training.busboard.ArrivalPrediction;
+import training.busboard.models.ArrivalPrediction;
 
 import java.util.List;
 

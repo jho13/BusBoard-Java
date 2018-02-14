@@ -1,6 +1,9 @@
 package training.busboard;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import training.busboard.models.ArrivalPrediction;
+import training.busboard.models.Coordinates;
+import training.busboard.models.StopPoint;
 
 import javax.ws.rs.core.GenericType;
 import javax.ws.rs.core.MediaType;

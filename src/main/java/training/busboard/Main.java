@@ -1,5 +1,9 @@
 package training.busboard;
 
+import training.busboard.models.ArrivalPrediction;
+import training.busboard.models.Coordinates;
+import training.busboard.models.StopPoint;
+
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
